@@ -1,6 +1,6 @@
 #include <iostream>
 
-int main() {
-  std::cout << "Hi, Misha and Jenja !!!";
-  return 0;
+int main()
+{
+    std::cout << "Ego est sapiens at Roman est stultus \n";
 }
