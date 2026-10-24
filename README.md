@@ -15,4 +15,4 @@ g++ -std=c++17 main.cpp -o app
 - `bugfix/<ticket>-<desc>` — баги
 
 ## Владельцы
-@teamlead
+@rmtsp
