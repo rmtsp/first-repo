@@ -1,6 +1,6 @@
 #pragma once
 #include "structs.h"
-// В этом файле, каждый прописывает прототипы своих функций
+// Г‚ ГЅЕ€Г®Д› ГґЕ•Г©Г«Дє, Д™Е•Д‡Г¤Е±Г© ДЏД‘Г®ДЏДЌЕ„Е±ГўЕ•ДєЕ€ ДЏД‘Г®Е€Г®Е€ДЌДЏЕ± Е„ГўГ®ДЌЕ‘ ГґГіГ­Д™Г¶ДЌГ©
 
 
 
@@ -10,6 +10,7 @@ void appendSurnameToGrades(const char* binFilename1, const char* binFilename2);
 void calculateAverage(const char* binFilename);
 
 // Misha 
+С€СЊ РїС„РЅ
 
 
 // Jenja 
