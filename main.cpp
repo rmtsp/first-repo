@@ -1,6 +1,41 @@
 #include <iostream>
+#include <clocale>
+#include "file_ops.h"
 
-int main()
-{
-    std::cout << "Ego est sapiens at Roman est stultus \n";
+int main() {
+    setlocale(LC_ALL, "Russian");
+
+    std::cout << "=== НАЧАЛО РАБОТЫ ПРОГРАММЫ ===\n\n";
+
+    // ==========================================
+    // БЛОК 1. ТИМЛИД (Рома)
+    // ==========================================
+    std::cout << "--- Блок Ромы (Тимлид) ---\n";
+    
+    std::cout << "1. Формирование бинарного файла из текстового...\n";
+    createBinaryFile("data.txt", "students.bin");
+
+    std::cout << "2. Добавление фамилий к ведомостям...\n";
+    addSurname("students.bin", "students_with_names.bin");
+
+    std::cout << "3. Вычисление среднего балла...\n";
+    calculateAverage("students_with_names.bin");
+    std::cout << "Готово.\n\n";
+
+
+    // ==========================================
+    // ego est sapiens
+    // ==========================================
+   
+//hui
+
+    // ==========================================
+    // БЛОК 3. РАЗРАБОТЧИК 2 
+    // ==========================================
+ 
+
+
+    
+    std::cout << "\n=== РАБОТА ПРОГРАММЫ ЗАВЕРШЕНА ===\n";
+    return 0;
 }
