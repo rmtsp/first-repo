@@ -11,6 +11,7 @@ void calculateAverage(const char* binFilename);
 
 // Misha 
 void FormBadList(const char* binFilename, Student* badlist, int& badCount);
+void SortBadList(Student* badlist, int badCount);
 
 // Jenja 
 void printGroupAlphabetical(const char* binFilename, int group);
