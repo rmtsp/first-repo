@@ -13,3 +13,6 @@ void calculateAverage(const char* binFilename);
 
 
 // Jenja 
+void printGroupAlphabetical(const char* binFilename, int group);
+void printGroupByAverage(const char* binFilename, int group);
+void findExcellentStudents(const char* binFilename, const char* excelBinFilename);
