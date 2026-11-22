@@ -8,12 +8,12 @@
 #include <iostream>
 
 void FormBadList(const char* binFilename, Student* badlist, int& badCount) {
-    std::ifstream filemarks("C:\\Games\\fileb.txt", std::ios::binary);
-    std::ifstream filenames("C:\\Games\\input.txt", std::ios::binary);
-    Student list[10];
+    std::ifstream filemarks(binFilename, std::ios::binary);
+    std::ifstream filenames(binFilename, std::ios::binary);
+    Student list[100];
     std::string linemarks;
     std::string linenames;
-    size_t marks_size[10]{ 0 };
+    size_t marks_size[100]{ 0 };
     size_t students_size = 0;
     for (int j = 0; std::getline(filemarks, linemarks) || std::getline(filenames, linenames);++j, ++students_size) {
         Student st;
@@ -89,6 +89,36 @@ void SortBadList(Student* badlist, int badCount) {
         }
     }
 }
+void PrintBinFile(const char* binFilename, const char* header) {
+    std::ifstream inFile(binFilename, std::ios::binary);
+    if (inFile.is_open()) {
+        std::cout << header << "\n";
+        Student temp;
+        while (inFile.read(reinterpret_cast<char*>(&temp), sizeof(Student))) {
+            std::cout << temp.surname << " " << temp.groupNumber << " " << temp.recordBookNumber << '\n';
+        }
+        inFile.close();
+    }
+}
 
+void CreateBadList(const char* binFilename, const char* badBinFilename) {
+    Student badlist[100];
+    int badCount = 0;
+
+    FormBadList(binFilename, badlist, badCount);
+
+    PrintBinFile(binFilename, "Бинарный файл до сортировки:");
+
+    std::cout << "сортировка списка неуспевающих по группам...\n";
+    SortBadList(badlist, badCount);
+
+    std::ofstream outFile(badBinFilename, std::ios::binary);
+    if (outFile.is_open()) {
+        outFile.write(reinterpret_cast<char*>(badlist), sizeof(Student) * badCount);
+        outFile.close();
+    }
+
+    PrintBinFile(badBinFilename, "Бинарный файл после сортировки:");
+}
 
 

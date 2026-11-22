@@ -30,15 +30,7 @@ int main() {
     std::cout << "--- Блок Михаила ---" << '\n';
 
     std::cout << "формирование списка неуспевающих...\n";
-    void FormBadList(const char* binFilename, Student * badlist, int& badCount);
-
-    std::cout << "список неуспевающих до сортировки:\n";
-
-    std::cout << "сортировка списка неуспевающих по группам...\n";
-    void SortBadList(Student * badlist, int badCount);
-
-
-    std::cout << "распечатка бинарного файла после сортировки...\n";
+    CreateBadList("students_with_names.bin", "bad_students.bin");
     // ==========================================
     // БЛОК 3. РАЗРАБОТЧИК 2 
     // ==========================================
