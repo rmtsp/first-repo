@@ -10,7 +10,7 @@ void appendSurnameToGrades(const char* binFilename1, const char* binFilename2);
 void calculateAverage(const char* binFilename);
 
 // Misha 
-
+void FormBadList(const char* binFilename, Student* badlist, int& badCount);
 
 // Jenja 
 void printGroupAlphabetical(const char* binFilename, int group);
