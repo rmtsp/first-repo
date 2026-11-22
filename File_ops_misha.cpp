@@ -71,3 +71,24 @@ void FormBadList(const char* binFilename, Student* badlist, int& badCount) {
     }
 }
 
+void SortBadList(Student* badlist, int badCount) {
+    for (int i = 0; i < badCount - 1; ++i) {
+        for (int j = 0; j < badCount - i - 1; ++j) {
+            if (badlist[j].groupNumber > badlist[j + 1].groupNumber) {
+                Student temp = badlist[j];
+                badlist[j] = badlist[j + 1];
+                badlist[j + 1] = temp;
+            }
+            else if (badlist[j].groupNumber == badlist[j + 1].groupNumber) {
+                if (strcmp(badlist[j].surname, badlist[j + 1].surname) > 0) {
+                    Student temp = badlist[j];
+                    badlist[j] = badlist[j + 1];
+                    badlist[j + 1] = temp;
+                }
+            }
+        }
+    }
+}
+
+
+
