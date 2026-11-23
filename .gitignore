@@ -71,3 +71,6 @@ Testing/
 .vs/
 *.bin
 applicationhost.config
+
+bin/
+txt/
