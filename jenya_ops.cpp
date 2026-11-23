@@ -3,6 +3,8 @@
 #include <fstream>
 #include <cstring>
 #include <cstdio>
+#include <vector>
+#include <algorithm>
 
 void printGroupAlphabetical(const char* binFileName, int group) {
     std::ifstream file(binFileName, std::ios::binary);
@@ -96,4 +98,84 @@ void findExcellentStudents(const char* binFileName, const char* excelBinFilename
     file.close(); outFile.close();
     if (count == 0) printf("No excellent students found.\n");
     printf("Total excellent: %d\n\n", count);
+
+
+}
+// Запись списка неуспевающих в текстовый файл
+void saveBadListToTxt(const char* binFilename, const char* txtFilename) {
+    std::ifstream in(binFilename, std::ios::binary);
+    std::ofstream out(txtFilename);
+    if (!in.is_open() || !out.is_open()) return;
+
+    out << "LIST OF FAILING STUDENTS (Sorted by group, then by surname):\n";
+    out << "--------------------------------------------------------\n";
+    out << "Surname\t\t| Group | Record Book\n";
+    out << "--------------------------------------------------------\n";
+
+    Student st;
+    while (in.read(reinterpret_cast<char*>(&st), sizeof(Student))) {
+        out << st.surname << "\t\t| " << st.groupNumber << "\t| " << st.recordBookNumber << "\n";
+    }
+    in.close(); out.close();
+    std::cout << "Saved to " << txtFilename << "\n";
+}
+
+// Запись ведомости (по алфавиту) в текстовый файл
+void saveGroupToTxtAlphabetical(const char* binFilename, int group, const char* txtFilename) {
+    std::ifstream in(binFilename, std::ios::binary);
+    std::ofstream out(txtFilename);
+    if (!in.is_open() || !out.is_open()) return;
+
+    // Сначала считываем всех студентов группы в массив для сортировки
+    std::vector<Student> groupStudents;
+    Student temp;
+    while (in.read(reinterpret_cast<char*>(&temp), sizeof(Student))) {
+        if (temp.groupNumber == group) groupStudents.push_back(temp);
+    }
+    in.close();
+
+    // Сортируем по алфавиту (стандартная функция std::sort)
+    std::sort(groupStudents.begin(), groupStudents.end(), [](const Student& a, const Student& b) {
+        return std::strcmp(a.surname, b.surname) < 0;
+        });
+
+    out << "GROUP " << group << " (Alphabetical):\n";
+    out << "--------------------------------------------------------\n";
+    out << "Surname\t\t| Record Book | Grades | Avg\n";
+    out << "--------------------------------------------------------\n";
+    for (const auto& s : groupStudents) {
+        out << s.surname << "\t\t| " << s.recordBookNumber << "\t| "
+            << s.grades[0] << " " << s.grades[1] << " " << s.grades[2] << " | " << s.average << "\n";
+    }
+    out.close();
+    std::cout << "Saved to " << txtFilename << "\n";
+}
+
+// Запись ведомости (по убыванию среднего) в текстовый файл
+void saveGroupToTxtAverage(const char* binFilename, int group, const char* txtFilename) {
+    std::ifstream in(binFilename, std::ios::binary);
+    std::ofstream out(txtFilename);
+    if (!in.is_open() || !out.is_open()) return;
+
+    std::vector<Student> groupStudents;
+    Student temp;
+    while (in.read(reinterpret_cast<char*>(&temp), sizeof(Student))) {
+        if (temp.groupNumber == group) groupStudents.push_back(temp);
+    }
+    in.close();
+
+    // Сортируем по убыванию среднего балла
+    std::sort(groupStudents.begin(), groupStudents.end(), [](const Student& a, const Student& b) {
+        return a.average > b.average;
+        });
+
+    out << "GROUP " << group << " (By Average):\n";
+    out << "--------------------------------------------------------\n";
+    out << "Surname\t\t| Avg\n";
+    out << "--------------------------------------------------------\n";
+    for (const auto& s : groupStudents) {
+        out << s.surname << "\t\t| " << s.average << "\n";
+    }
+    out.close();
+    std::cout << "Saved to " << txtFilename << "\n";
 }

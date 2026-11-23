@@ -16,3 +16,8 @@ void CreateBadList(const char* binFilename, const char* badBinFilename);
 void printGroupAlphabetical(const char* binFilename, int group);
 void printGroupByAverage(const char* binFilename, int group);
 void findExcellentStudents(const char* binFilename, const char* excelBinFilename);
+
+// Новые функции для записи в текстовые файлы (Пункт 4)
+void saveBadListToTxt(const char* binFilename, const char* txtFilename);
+void saveGroupToTxtAlphabetical(const char* binFilename, int group, const char* txtFilename);
+void saveGroupToTxtAverage(const char* binFilename, int group, const char* txtFilename);
