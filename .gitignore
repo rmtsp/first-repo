@@ -67,4 +67,7 @@ vcpkg_installed/
 Testing/
 .cache/
 
+# Игнорируем мусор
 .vs/
+*.bin
+applicationhost.config
