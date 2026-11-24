@@ -3,7 +3,10 @@
 #include <iostream>
 #include <sstream>
 #include <cstring>
-#include <vector>
+#include <cstdio>
+
+// ќбъ€вл€ем максимальное количество студентов
+const int MAX_STUDENTS = 100;
 
 void createBinaryFile(const char* txtFilename1, const char* txtFilename2, const char* binFilename1, const char* binFilename2) {
     std::ifstream txtFile1(txtFilename1);
@@ -64,21 +67,31 @@ void createBinaryFile(const char* txtFilename1, const char* txtFilename2, const 
 }
 
 void appendSurnameToGrades(const char* binFilename1, const char* binFilename2, const char* outFilename) {
-    std::vector<Student> students1;
+    // ¬место вектора используем статический массив
+    Student students1[MAX_STUDENTS];
+    int count1 = 0;
+
     std::ifstream binFile1(binFilename1, std::ios::binary);
     if (binFile1.is_open()) {
         Student st;
-        while (binFile1.read(reinterpret_cast<char*>(&st), sizeof(Student))) students1.push_back(st);
+        // „итаем, пока есть данные и не превысили лимит
+        while (binFile1.read(reinterpret_cast<char*>(&st), sizeof(Student)) && count1 < MAX_STUDENTS) {
+            students1[count1] = st;
+            count1++;
+        }
         binFile1.close();
     }
+
     std::ifstream binFile2(binFilename2, std::ios::binary);
     std::ofstream outFile(outFilename, std::ios::binary);
     if (binFile2.is_open() && outFile.is_open()) {
         Student st2;
         while (binFile2.read(reinterpret_cast<char*>(&st2), sizeof(Student))) {
-            for (const auto& s : students1) {
-                if (s.recordBookNumber == st2.recordBookNumber) {
-                    std::strncpy(st2.surname, s.surname, sizeof(st2.surname) - 1); break;
+            // »щем по массиву
+            for (int i = 0; i < count1; ++i) {
+                if (students1[i].recordBookNumber == st2.recordBookNumber) {
+                    std::strncpy(st2.surname, students1[i].surname, sizeof(st2.surname) - 1);
+                    break;
                 }
             }
             outFile.write(reinterpret_cast<const char*>(&st2), sizeof(Student));
